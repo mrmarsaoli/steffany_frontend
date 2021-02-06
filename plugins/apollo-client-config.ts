@@ -3,7 +3,7 @@ import { RootState } from '~/store'
 
 export default ({ store, env }: Context) => {
   return {
-    httpEndpoint: env.API_URL + '/graphql',
+    httpEndpoint: env.GRAPHQL_URL,
     httpLinkOptions: {
       credentials: 'include'
     },

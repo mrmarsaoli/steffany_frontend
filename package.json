@@ -1,7 +1,6 @@
 {
-  "name": "ebay-template-generator",
+  "name": "steffany_frontend",
   "version": "1.0.0",
-  "description": "Ebay template generator made with Nuxt.js",
   "author": "mrmarsaoli@gmail.com",
   "private": true,
   "scripts": {
