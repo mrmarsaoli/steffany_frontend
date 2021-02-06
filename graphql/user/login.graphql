@@ -1,0 +1,13 @@
+mutation Login($params: UserInput!) {
+  login (params: $params) {
+    errors {
+      field
+      message
+    }
+    user {
+     	id
+    	email
+    }
+    accessToken
+  }
+}

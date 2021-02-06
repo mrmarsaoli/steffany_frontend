@@ -1,6 +1,6 @@
 <template>
-  <v-app id="inspire">
-    <div v-if="toggleSearch" class="grey darken-3 toggle-box">
+  <v-app>
+    <div v-if="toggleSearch" class="grey darken-3 toggle-box" style="">
       <v-row justify="center" no-gutters>
         <v-col
           cols="6"
@@ -13,15 +13,13 @@
         </v-col>
       </v-row>
     </div>
-
     <v-app-bar
       app
       :color="$vuetify.theme.dark ? '' : 'white'"
       class="px-3 flex-grow-0"
-      style="z-index: 9"
     >
       <nuxt-link to="/">
-        <h1 color="primary">SteffAny</h1>
+        <h1>SteffAny</h1>
       </nuxt-link>
 
       <v-tabs centered class="ml-n9 d-none d-md-block" color="grey darken-1">
@@ -40,34 +38,6 @@
         <v-icon v-if="!$vuetify.theme.dark" size="20">mdi-lightbulb-on</v-icon>
         <v-icon v-else size="20">mdi-lightbulb-on-outline</v-icon>
       </v-btn>
-
-      <template v-if="$store.state.auth.user.id">
-        <v-menu offset-y bottom left>
-          <template #activator="{ on, attrs }">
-            <v-btn v-bind="attrs" icon v-on="on">
-              <v-icon size="20">mdi-account</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in userMenu"
-              :key="index"
-              nuxt
-              :to="item.path"
-            >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-            <v-list-item @click="logout">
-              <v-list-item-title>Logout</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </template>
-      <template v-else>
-        <v-btn icon nuxt to="/login">
-          <v-icon size="20">mdi-login</v-icon>
-        </v-btn>
-      </template>
 
       <v-app-bar-nav-icon
         size="20"
@@ -109,26 +79,11 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-
-    <v-main :class="$vuetify.theme.dark ? '' : 'grey lighten-3'">
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="6" lg="2" class="order-2 order-lg-1">
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col cols="12" lg="8" class="order-1 order-lg-2">
-            <v-sheet min-height="70vh" rounded="lg">
-              <nuxt />
-            </v-sheet>
-          </v-col>
-
-          <v-col cols="12" sm="6" lg="2" class="order-3">
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
+    <v-main>
+      <v-container class="fill-height">
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="6" md="6" lg="4" xl="3">
+            <nuxt />
           </v-col>
         </v-row>
       </v-container>
@@ -139,33 +94,31 @@
 <script lang="ts">
 import Vue from 'vue'
 import LogoutMutationGQL from '@/graphql/user/logout.graphql'
+import { RootState } from '~/store'
 
 export default Vue.extend({
-  name: 'DefaultLayout',
+  name: 'AuthLayout',
   data: () => ({
     links: [
       {
-        title: 'Home',
+        title: 'Start',
         path: '/'
       },
       {
-        title: 'Schedule',
+        title: 'Akademie',
         path: '/akademie'
-      }
-    ],
-    userMenu: [
-      {
-        title: 'My Shift',
-        path: '/user/course'
-      },
-      {
-        title: 'Settings',
-        path: '/user/settings'
       }
     ],
     toggleSearch: false,
     drawer: false
   }),
+  mounted() {
+    const state: RootState = this.$store.state
+
+    if (state.auth.user?.id) {
+      this.$router.push('/')
+    }
+  },
 
   methods: {
     logout() {
@@ -185,9 +138,7 @@ export default Vue.extend({
           this.$store.dispatch('resetAuthentication')
 
           this.$nextTick(() => {
-            this.$router.push('/login', () => {
-              window.location.reload()
-            })
+            this.$router.push('/login')
           })
         })
         .catch((err) => {

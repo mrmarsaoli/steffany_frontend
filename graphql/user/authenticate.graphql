@@ -1,0 +1,12 @@
+query Authenticate {
+  authenticate {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      email
+    }
+  }
+}
