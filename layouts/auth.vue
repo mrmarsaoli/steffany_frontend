@@ -1,18 +1,5 @@
 <template>
   <v-app>
-    <div v-if="toggleSearch" class="grey darken-3 toggle-box" style="">
-      <v-row justify="center" no-gutters>
-        <v-col
-          cols="6"
-          class="d-flex px-8 pb-8 pt-12 justify-center item-center"
-        >
-          <v-text-field solo label="Search" append-icon="mdi-magnify" />
-          <v-btn icon class="ml-3" @click="toggleSearch = false">
-            <v-icon color="white" large>mdi-close</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </div>
     <v-app-bar
       app
       :color="$vuetify.theme.dark ? '' : 'white'"
@@ -29,10 +16,6 @@
       </v-tabs>
 
       <v-spacer></v-spacer>
-
-      <v-btn class="d-none d-md-inline-flex" icon @click="toggleSearch = true">
-        <v-icon size="20">mdi-magnify</v-icon>
-      </v-btn>
 
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon v-if="!$vuetify.theme.dark" size="20">mdi-lightbulb-on</v-icon>
@@ -53,19 +36,6 @@
       temporary
       class="d-flex flex-column"
     >
-      <template #prepend>
-        <v-text-field
-          solo
-          label="Search"
-          dense
-          outlined
-          flat
-          class="pa-4 d-block d-md-none"
-          active-class="grey lighten-2"
-          append-icon="mdi-magnify"
-          hide-details
-        ></v-text-field>
-      </template>
       <v-list nav>
         <v-list-item-group>
           <v-list-item
@@ -109,7 +79,6 @@ export default Vue.extend({
         path: '/akademie'
       }
     ],
-    toggleSearch: false,
     drawer: false
   }),
   mounted() {
@@ -148,13 +117,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.toggle-box {
-  position: fixed;
-  width: 100%;
-  z-index: 99999;
-  left: 0;
-  top: 0;
-}
-</style>
