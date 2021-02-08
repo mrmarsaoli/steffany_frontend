@@ -212,6 +212,19 @@ export type ShiftDetailQuery = { __typename?: 'Query' } & {
   }
 }
 
+export type EditShiftMutationVariables = Exact<{
+  params: EditShiftInput
+}>
+
+export type EditShiftMutation = { __typename?: 'Mutation' } & {
+  editShift: { __typename?: 'ShiftResponse' } & {
+    errors: Array<
+      { __typename?: 'FieldError' } & Pick<FieldError, 'field' | 'message'>
+    >
+    shift?: Maybe<{ __typename?: 'Shift' } & Pick<Shift, 'id' | 'name'>>
+  }
+}
+
 export type ShiftListQueryVariables = Exact<{
   params: ShiftListInput
 }>

@@ -8,6 +8,7 @@ declare module '*/create.graphql' {
     DocumentNode,
     DocumentNode,
     DocumentNode,
+    DocumentNode,
     DocumentNode
   } from 'graphql'
   const defaultDocument: DocumentNode
@@ -26,6 +27,13 @@ declare module '*/delete.graphql' {
 declare module '*/detail.graphql' {
   const defaultDocument: DocumentNode
   export const ShiftDetail: DocumentNode
+
+  export default defaultDocument
+}
+
+declare module '*/edit.graphql' {
+  const defaultDocument: DocumentNode
+  export const EditShift: DocumentNode
 
   export default defaultDocument
 }

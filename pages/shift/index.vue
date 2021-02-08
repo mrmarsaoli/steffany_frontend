@@ -102,7 +102,7 @@ export default Vue.extend({
       variables: {
         params: {
           orderBy: 'start',
-          limit: 12
+          limit: -1
         }
       } as ShiftListQueryVariables
     })

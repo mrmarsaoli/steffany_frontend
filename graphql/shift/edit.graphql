@@ -1,0 +1,12 @@
+mutation EditShift($params: EditShiftInput!) {
+  editShift(params: $params) {
+    errors {
+      field
+      message
+    }
+    shift {
+      id
+      name
+    }
+  }
+}
