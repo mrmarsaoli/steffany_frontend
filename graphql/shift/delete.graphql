@@ -1,0 +1,9 @@
+mutation DeleteShift($id: Int!) {
+  deleteShift(id: $id) {
+    error {
+      field
+      message
+    }
+    deleted
+  }
+}

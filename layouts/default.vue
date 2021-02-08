@@ -1,119 +1,69 @@
 <template>
-  <v-app id="inspire">
-    <v-app-bar
-      app
-      :color="$vuetify.theme.dark ? '' : 'white'"
-      class="px-3 flex-grow-0"
-      style="z-index: 9"
-    >
-      <nuxt-link to="/">
-        <h1 color="primary">SteffAny</h1>
-      </nuxt-link>
-
-      <v-tabs centered class="ml-n9 d-none d-md-block" color="grey darken-1">
-        <v-tab v-for="link in links" :key="link.title" :to="link.path" nuxt>
-          {{ link.title }}
-        </v-tab>
-      </v-tabs>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-        <v-icon v-if="!$vuetify.theme.dark" size="20">mdi-lightbulb-on</v-icon>
-        <v-icon v-else size="20">mdi-lightbulb-on-outline</v-icon>
-      </v-btn>
-
-      <template v-if="$store.state.auth.user.id">
-        <v-menu offset-y bottom left>
-          <template #activator="{ on, attrs }">
-            <v-btn v-bind="attrs" icon v-on="on">
-              <v-icon size="20">mdi-account</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in userMenu"
-              :key="index"
-              nuxt
-              :to="item.path"
-            >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-            <v-list-item @click="logout">
-              <v-list-item-title>Logout</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </template>
-      <template v-else>
-        <v-btn icon nuxt to="/login">
-          <v-icon size="20">mdi-login</v-icon>
-        </v-btn>
-      </template>
-
-      <v-app-bar-nav-icon
-        size="20"
-        class="d-block d-md-none"
-        @click.stop="drawer = !drawer"
-      ></v-app-bar-nav-icon>
-    </v-app-bar>
-
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
-      fixed
-      right
-      temporary
-      class="d-flex flex-column"
+      app
+      :permanent="$vuetify.breakpoint.smAndUp"
     >
-      <template #prepend>
-        <v-text-field
-          solo
-          label="Search"
-          dense
-          outlined
-          flat
-          class="pa-4 d-block d-md-none"
-          active-class="grey lighten-2"
-          append-icon="mdi-magnify"
-          hide-details
-        ></v-text-field>
-      </template>
-      <v-list nav>
-        <v-list-item-group>
+      <v-list subheader>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title"> SteffAny </v-list-item-title>
+            <v-list-item-subtitle> Love you 3000 </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list>
+        <v-list-item to="/" nuxt exact>
+          <v-list-item-icon> <v-icon>mdi-home</v-icon></v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+        <template v-if="$store.state.auth.user.id">
+          <v-divider />
           <v-list-item
-            v-for="(link, index) in links"
+            v-for="(item, index) in userMenu"
             :key="index"
             nuxt
-            :to="link.path"
+            exact
+            :to="item.path"
           >
-            <v-list-item-title>{{ link.title }}</v-list-item-title>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon></v-list-item-icon
+            >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
-        </v-list-item-group>
+        </template>
+        <v-divider />
+        <v-list-item @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+          <v-list-item-icon>
+            <v-icon v-if="$vuetify.theme.dark">mdi-lightbulb-on</v-icon>
+            <v-icon v-else>mdi-lightbulb-on-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Theme</v-list-item-title>
+        </v-list-item>
+        <v-divider />
+        <v-list-item v-if="$store.state.auth.user.id" @click="logout">
+          <v-list-item-icon> <v-icon>mdi-logout</v-icon></v-list-item-icon>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-main :class="$vuetify.theme.dark ? '' : 'grey lighten-3'">
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="6" lg="2" class="order-2 order-lg-1">
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
-          </v-col>
+    <v-app-bar app>
+      <v-app-bar-nav-icon
+        v-if="$vuetify.breakpoint.xsOnly"
+        @click="drawer = !drawer"
+      ></v-app-bar-nav-icon>
 
-          <v-col cols="12" lg="8" class="order-1 order-lg-2">
-            <v-sheet min-height="70vh" rounded="lg">
-              <nuxt />
-            </v-sheet>
-          </v-col>
+      <v-toolbar-title>{{ $store.state.title }}</v-toolbar-title>
+    </v-app-bar>
 
-          <v-col cols="12" sm="6" lg="2" class="order-3">
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-container>
+    <v-main>
+      <v-row class="mx-0 mx-md-4 mx-sm-2 my-0 my-md-4 my-sm-2" no-gutters>
+        <v-col cols="12" md="12" lg="10" xl="8">
+          <nuxt />
+        </v-col>
+      </v-row>
     </v-main>
   </v-app>
 </template>
@@ -125,29 +75,20 @@ import LogoutMutationGQL from '@/graphql/user/logout.graphql'
 export default Vue.extend({
   name: 'DefaultLayout',
   data: () => ({
-    links: [
-      {
-        title: 'Home',
-        path: '/'
-      },
-      {
-        title: 'Schedule',
-        path: '/akademie'
-      }
-    ],
     userMenu: [
       {
         title: 'My Shift',
-        path: '/user/course'
+        path: '/shift',
+        icon: 'mdi-account-clock'
       },
       {
-        title: 'Settings',
-        path: '/user/settings'
+        title: 'Add Shift',
+        path: '/shift/add',
+        icon: 'mdi-alarm-plus'
       }
     ],
     drawer: false
   }),
-
   methods: {
     logout() {
       this.$apolloProvider.defaultClient

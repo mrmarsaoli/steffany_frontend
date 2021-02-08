@@ -1,0 +1,14 @@
+mutation PublishShift($ids: [Int!]!) {
+  publishShift(ids: $ids) {
+    error {
+      field
+      message
+    }
+    bulkingErrors {
+      field
+      message
+      id
+    }
+    success
+  }
+}

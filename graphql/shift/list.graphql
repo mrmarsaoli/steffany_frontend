@@ -1,0 +1,15 @@
+query ShiftList($params: ShiftListInput!) {
+  shifts(params: $params) {
+    error {
+      field
+      message
+    }
+    data: shifts {
+      id
+      name
+      start
+      end
+      published
+    }
+  }
+}

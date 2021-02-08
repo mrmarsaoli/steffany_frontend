@@ -1,7 +1,7 @@
 <template>
   <v-card outlined class="text-center" flat>
     <v-card-title class="text-h4 my-4 font-semibold justify-center">
-      Welcome Back!</v-card-title
+      Login to Start!</v-card-title
     >
     <v-card-text>
       <v-form class="text-center">
@@ -31,7 +31,6 @@
           @keydown.enter="login"
         />
       </v-form>
-      <span>Forgot your password?</span>
     </v-card-text>
     <v-card-text>
       <v-btn outlined nuxt to="/signup" class="mr-3">Sign up</v-btn>
@@ -98,7 +97,7 @@ export default Vue.extend({
           }
 
           this.$store.commit('SET_AUTHENTICATION', {
-            account: res.user,
+            user: res.user,
             accessToken: res.accessToken
           })
 

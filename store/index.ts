@@ -3,6 +3,7 @@ import { UserResponse } from '@/types/graphql'
 import { checkAuth } from '~/utils/user'
 
 export const state = () => ({
+  title: 'Home',
   auth: {
     user: {
       id: 0,
@@ -15,7 +16,8 @@ export const state = () => ({
 export type RootState = ReturnType<typeof state>
 
 export const mutations: MutationTree<RootState> = {
-  SET_AUTHENTICATION: (state, value: UserResponse) => (state.auth = value)
+  SET_AUTHENTICATION: (state, value: UserResponse) => (state.auth = value),
+  SET_TITLE: (state, value: string) => (state.title = value)
 }
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -32,6 +34,15 @@ export const actions: ActionTree<RootState, RootState> = {
     }
 
     await checkAuth(context)
+  },
+
+  /**
+   * Set page title
+   * @param { state }
+   * @param title
+   */
+  setTitle({ commit }, title: string) {
+    commit('SET_TITLE', title)
   },
 
   /**

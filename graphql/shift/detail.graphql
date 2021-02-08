@@ -1,0 +1,15 @@
+query ShiftDetail($id: Int!) {
+  shift(id: $id) {
+    errors {
+      field
+      message
+    }
+    data: shift {
+      id
+      name
+      start
+      end
+      published
+    }
+  }
+}

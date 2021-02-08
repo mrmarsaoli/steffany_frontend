@@ -1,0 +1,12 @@
+mutation CreateShift($params: CreateShiftInput!) {
+  createShift(params: $params) {
+    errors {
+      field
+      message
+    }
+    shift {
+      id
+      name
+    }
+  }
+}

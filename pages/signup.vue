@@ -1,7 +1,7 @@
 <template>
   <v-card outlined class="text-center" flat>
     <v-card-title class="text-h4 my-4 font-semibold justify-center">
-      Create an User</v-card-title
+      Create an Account</v-card-title
     >
     <v-card-text>
       <v-form class="text-center">
@@ -15,7 +15,7 @@
           single-line
           type="text"
           color="primary"
-          @keydown.enter="login"
+          @keydown.enter="register"
         />
         <v-text-field
           id="password"
@@ -28,7 +28,7 @@
           single-line
           type="password"
           color="primary"
-          @keydown.enter="login"
+          @keydown.enter="register"
         />
       </v-form>
     </v-card-text>
